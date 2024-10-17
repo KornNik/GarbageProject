@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e337431859f756749a723a951343657f, type: 3}
+  m_Name: DefaultGunConfig
+  m_EditorClassIdentifier: 
+  _type: 1
+  _name: Revolver
+  _prefab: {fileID: 6037435434769526530, guid: e3197ed9da10e3c479a6907fe80b4989, type: 3}
+  _spawnPoint: {x: 0, y: 0, z: 0}
+  _spawnRotation: {x: 0, y: 0, z: 0}
+  _shootConfiguration: {fileID: 11400000, guid: 0f3c573f6d1bdf640b31304a9f837bc1,
+    type: 2}
+  _trailConfig: {fileID: 11400000, guid: 07f85b7c78b18c34bb042f5e21682ed9, type: 2}

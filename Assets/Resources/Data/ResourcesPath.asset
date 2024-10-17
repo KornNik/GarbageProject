@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c6ddcb6634470b4a9e67ce2a4f40d0f, type: 3}
+  m_Name: ResourcesPath
+  m_EditorClassIdentifier: 
+  _prefabsFolder: Prefabs/
+  _playerFolder: Player/
+  _unitsFolder: Units/
+  _audioFolder: Audio/
+  _uiScreenFolder: UI/Screens/
+  _uiPartFolder: UI/Parts/
+  _camerasFolder: Cameras/Prefabs_Cameras_MainCamera
+  _gameStatePath: GameStateBehaviour
+  _screensPath:
+  - Type: 1
+    ResourcePath: Prefabs_UI_Canvas
+  - Type: 2
+    ResourcePath: Prefabs_UI_MainMenu
+  - Type: 3
+    ResourcePath: Prefabs_UI_PauseMenu
+  - Type: 4
+    ResourcePath: Prefabs_UI_GameMenu
+  _audiosPath:
+  - Type: 1
+    ResourcePath: AudioSourcePrefab
+  - Type: 2
+    ResourcePath: AudioSourceBackground
+  - Type: 3
+    ResourcePath: AudioController

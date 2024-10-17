@@ -1,0 +1,6 @@
+﻿namespace Attributes
+{
+    interface IBaseAttribute
+    {
+    }
+}
