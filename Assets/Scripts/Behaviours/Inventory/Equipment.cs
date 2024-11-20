@@ -6,7 +6,7 @@ namespace Behaviours
 {
     class Equipment : IInventory
     {
-        public event Action WeaponEquiped;
+        public event Action<bool> WeaponEquiped;
         private Weapon _weapon;
         private Dictionary<ArmorType, Item> _armors = new Dictionary<ArmorType, Item>(2);
 
@@ -29,27 +29,33 @@ namespace Behaviours
             else return true;
         }
 
-        public void AddItem(Item item)
+        public bool AddItem(Item item)
         {
             if (item is Weapon)
             {
                 _weapon = item as Weapon;
-                WeaponEquiped?.Invoke();
+                WeaponEquiped?.Invoke(true);
+                return true;
             }
             else if (item is Armor)
             {
                 var armor = item as Armor;
                 _armors[armor.ArmorType] = armor;
+                return true;
             }
+            return false;
         }
-        public void RemoveItem(Item item)
+        public bool RemoveItem(Item item)
         {
             if(item is Weapon)
             {
                 if(ReferenceEquals(_weapon, null))
                 {
                     _weapon = null;
+                    WeaponEquiped?.Invoke(false);
+                    return true;
                 }
+                return false;
             }
             else if(item is Armor)
             {
@@ -57,8 +63,11 @@ namespace Behaviours
                 if (_armors.ContainsKey(armor.ArmorType))
                 {
                     _armors[armor.ArmorType] = null;
+                    return true;
                 }
+                return false;
             }
+            return false;
         }
     }
 

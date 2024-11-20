@@ -4,14 +4,17 @@ namespace Behaviours.States
 {
     sealed class CharacterStateController : BaseStateController
     {
-        private UnitModel _stateObject;
-        private IdleState _idleState;
-        private JumpState _jumpState;
-        private MovementState _movementState;
+        private IState _idleState;
+        private IState _jumpState;
+        private IState _crouchState;
+        private IState _movementState;
 
-        public IdleState IdleState => _idleState;
-        public JumpState JumpState => _jumpState;
-        public MovementState MovementState => _movementState;
+        private UnitModel _stateObject;
+
+        public IState IdleState => _idleState;
+        public IState JumpState => _jumpState;
+        public IState CrouchState => _crouchState;
+        public IState MovementState => _movementState;
 
         public UnitModel StateObject => _stateObject;
 
@@ -27,6 +30,7 @@ namespace Behaviours.States
             _idleState = new IdleState(this);
             _jumpState = new JumpState(this);
             _movementState = new MovementState(this);
+            _crouchState = new CrouchState(this);
         }
     }
 }

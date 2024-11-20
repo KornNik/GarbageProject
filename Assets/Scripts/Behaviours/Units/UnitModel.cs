@@ -1,5 +1,6 @@
 ﻿using Behaviours.States;
 using Data;
+using Helpers;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,6 +23,8 @@ namespace Behaviours.Units
         protected UnitEvents _unitEvents;
         protected UnitAttributesContainer _unitAttributes;
         protected CharacterStateController _characterStateController;
+        protected IInteracter _interacter;
+        protected Crouch _crouch;
 
         private Inventory _inventory;
         private Equipment _equipment;
@@ -29,6 +32,7 @@ namespace Behaviours.Units
         protected List<IEventSubscription> _subsciptions;
 
         public Jump Jump => _jump;
+        public Crouch Crouch =>_crouch;
         public Combat Combat => _combat;
         public Collider Collider => _collider;
         public UnitData UnitData => _unitData;
@@ -36,12 +40,13 @@ namespace Behaviours.Units
         public Movement Movement => _movement;
         public UnitEvents UnitEvents => _unitEvents;
         public UnitSounds UnitSounds => _unitSounds;
+        public IInteracter Interacter => _interacter;
         public UnitAnimation UnitAnimation => _unitAnimation;
         public UnitAttributesContainer UnitAttributes => _unitAttributes;
         public CharacterStateController CharacterStateController => _characterStateController;
 
-        protected Inventory Inventory => _inventory;
-        protected Equipment Equipment => _equipment;
+        public Inventory Inventory => _inventory;
+        public Equipment Equipment => _equipment;
 
         protected virtual void Awake()
         {
@@ -55,6 +60,7 @@ namespace Behaviours.Units
             _characterStateController = new CharacterStateController(this);
             _inventory = new Inventory();
             _equipment = new Equipment();
+            _interacter = new CharacterInteraction(this);
 
             FillSubscriptions();
         }

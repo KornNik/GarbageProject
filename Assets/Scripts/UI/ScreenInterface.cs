@@ -39,6 +39,9 @@ namespace UI
                 case ScreenTypes.PauseMenu:
                     _currentWindow = _screenFactory.GetPauseMenu();
                     break;
+                    case ScreenTypes.InventoryScreen:
+                    _currentWindow = _screenFactory.GetInventoryScreen();
+                    break;
                 default:
                     break;
             }
@@ -65,6 +68,11 @@ namespace UI
                     _screenFactory.GetPauseMenu().HideUI += listenerScreen.HideScreen;
                     _screenFactory.GetPauseMenu().Hide();
                     break;
+                case ScreenTypes.InventoryScreen:
+                    _screenFactory.GetInventoryScreen().ShowUI += listenerScreen.ShowScreen;
+                    _screenFactory.GetInventoryScreen().HideUI += listenerScreen.HideScreen;
+                    _screenFactory.GetInventoryScreen().Hide();
+                    break;
                 default:
                     break;
             }
@@ -88,6 +96,11 @@ namespace UI
                     _screenFactory.GetPauseMenu().ShowUI -= listenerScreen.ShowScreen;
                     _screenFactory.GetPauseMenu().HideUI -= listenerScreen.HideScreen;
                     _screenFactory.GetPauseMenu().Hide();
+                    break;
+                case ScreenTypes.InventoryScreen:
+                    _screenFactory.GetInventoryScreen().ShowUI -= listenerScreen.ShowScreen;
+                    _screenFactory.GetInventoryScreen().HideUI -= listenerScreen.HideScreen;
+                    _screenFactory.GetInventoryScreen().Hide();
                     break;
                 default:
                     break;

@@ -1,4 +1,5 @@
-﻿using Helpers;
+﻿using Behaviours;
+using Helpers;
 using Helpers.Extensions;
 using System;
 using UnityEngine;
@@ -11,6 +12,12 @@ namespace Data
         public TType Type;
         public string ResourcePath;
     }
+    [Serializable]
+    struct ResorcePrefabStruct<TType> where TType : struct
+    {
+        public TType Type;
+        public GameObject Gameobject;
+    }
     [CreateAssetMenu(fileName ="ResourcesPath",menuName ="Data/ResourcesPath")]
     sealed class ResourcesPathData : ScriptableObject
     {
@@ -20,41 +27,38 @@ namespace Data
         [SerializeField] private string _audioFolder;
         [SerializeField] private string _uiScreenFolder;
         [SerializeField] private string _uiPartFolder;
-        [SerializeField] private string _camerasFolder;
-        [SerializeField] private string _gameStatePath;
+        [SerializeField] private GameObject _cameraPrefab;
+        [SerializeField] private GameStateBehaviour _gameStatePrefab;
 
-        [SerializeField] private ResourcePathStruct<ScreenTypes>[] _screensPath;
-        [SerializeField] private ResourcePathStruct<AudioTypes>[] _audiosPath;
+        [SerializeField] private ResorcePrefabStruct<ScreenTypes>[] _screensPrefabs;
+        [SerializeField] private SerializableDictionary<AudioTypes, GameObject> _audioPrefabs;
 
-        public string GetScreenPath(ScreenTypes screenType)
+        public GameObject GetScreenPrefab(ScreenTypes screenType)
         {
-            string screenName = default;
-            for (int i = 0; i < _screensPath.Length; i++)
+            GameObject screenPrefab = default;
+            for (int i = 0; i < _screensPrefabs.Length; i++)
             {
-                if (_screensPath[i].Type == screenType) screenName = _screensPath[i].ResourcePath;
+                if (_screensPrefabs[i].Type == screenType) screenPrefab = _screensPrefabs[i].Gameobject;
             }
-            var fullPath = StringBuilderExtender.CreateString(_prefabsFolder, _uiScreenFolder, screenName);
-            return fullPath;
+
+            return screenPrefab;
         }
-        public string GetAudioPath(AudioTypes audioType)
+        public GameObject GetAudioPath(AudioTypes audioType)
         {
-            string audioName = default;
-            for (int i = 0; i < _audiosPath.Length; i++)
+            GameObject audioPrefab = default;
+            if (_audioPrefabs.TryGetValue(audioType,out audioPrefab))
             {
-                if (_audiosPath[i].Type == audioType) audioName = _audiosPath[i].ResourcePath;
+                return audioPrefab;
             }
-            var fullPath = StringBuilderExtender.CreateString(_prefabsFolder, _audioFolder, audioName);
-            return fullPath;
+            throw new NullReferenceException();
         }
-        public string GetCamerPath()
+        public GameObject GetCamerPath()
         {
-            var fullPath = StringBuilderExtender.CreateString(_prefabsFolder, _camerasFolder);
-            return fullPath;
+            return _cameraPrefab;
         }
-        public string GetGameStatePath()
+        public GameStateBehaviour GetGameStatePath()
         {
-            var fullPath = StringBuilderExtender.CreateString(_prefabsFolder, _gameStatePath);
-            return fullPath;
+            return _gameStatePrefab;
         }
 
     }

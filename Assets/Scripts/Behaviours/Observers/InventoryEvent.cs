@@ -10,10 +10,14 @@ namespace Behaviours
     }
     struct InventoryEvent
     {
+        private InventoryEventType _inventoryEventType;
         private static InventoryEvent _inventoryEvent;
 
-        public static void Trigger()
+        public InventoryEventType InventoryEventType  => _inventoryEventType;
+
+        public static void Trigger(InventoryEventType inventoryEventType)
         {
+            _inventoryEvent._inventoryEventType = inventoryEventType;
             EventManager.TriggerEvent(_inventoryEvent);
         }
     }
@@ -42,18 +46,21 @@ namespace Behaviours
         ItemMovedToInventory,
         ItemMovedToEquipment
     }
-    struct InventorySlotEvent
+    struct SlotEvent
     {
         private ItemData _itemData;
         private SlotEventType _slotEventType;
-        private static InventorySlotEvent _inventorySlotEvent;
+
+        private static SlotEvent _slotEvent;
 
         public ItemData ItemData => _itemData;
         public SlotEventType SlotEventType => _slotEventType;
 
-        public static void Trigger(ItemData ItemData, SlotEventType SlotEventType)
+        public static void Trigger(ItemData ItemData, SlotEventType slotEventType)
         {
-            EventManager.TriggerEvent(_inventorySlotEvent);
+            _slotEvent._itemData = ItemData;
+            _slotEvent._slotEventType = slotEventType;
+            EventManager.TriggerEvent(_slotEvent);
         }
     }
 }

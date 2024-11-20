@@ -9,6 +9,7 @@ namespace Behaviours.Units
         [SerializeField] private CharacterController _characterController;
 
         public Transform HeadTransform => _headTransform;
+        public CharacterController CharacterController => _characterController;
 
         protected override void InitializeComponents()
         {
@@ -17,6 +18,7 @@ namespace Behaviours.Units
             _jump = new Jump(_characterController, UnitAttributes);
             _rotation = new Rotation(_characterController);
             _combat = new Combat(Equipment);
+            _crouch = new Crouch(_characterController);
         }
     }
 }

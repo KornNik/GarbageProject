@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Garbage
   _description: Usless
-  _icon: {fileID: 21300000, guid: a11d716ada219fe4683e6147d610043e, type: 3}
-  _quntity: 1
-  _prefab: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 5a2758f7df3a05d4587013d54c698104, type: 3}
+  _prefab: {fileID: 100000, guid: 0aee836645b89374583afeb4ca36b969, type: 3}
+  _itemUsingType: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Behaviours.Units
 {
-    class UnitController : MonoBehaviour, IInteracter, IDamageable
+    class UnitController : MonoBehaviour, IDamageable
     {
         [SerializeField] private UnitModel _model;
         [SerializeField] private UnitView _view;
@@ -27,11 +27,6 @@ namespace Behaviours.Units
         private void LateUpdate()
         {
             _model.CharacterStateController.LateUpdate();
-        }
-
-        public void MakeInteraction(IInteractable<MonoBehaviour> interactable)
-        {
-            interactable.Interact(this);
         }
 
         public void TakeDamage(DamageableInfo damageInfo)

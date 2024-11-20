@@ -29,10 +29,13 @@ namespace Behaviours.States
         }
         protected override void InputHandle()
         {
+            base.InputHandle();
             var isMoving = _inputController.InputActions.
                 PlayerActionList[InputActionManagerPlayer.MOVEMENT].IsPressed();
             var isJumping = _inputController.InputActions.
                 PlayerActionList[InputActionManagerPlayer.JUMP].IsPressed();
+            var isCrouching = _inputController.InputActions.
+                PlayerActionList[InputActionManagerPlayer.CROUCH].IsPressed();
 
             if (isMoving)
             {
@@ -41,6 +44,10 @@ namespace Behaviours.States
             if (isJumping)
             {
                 _stateController.ChangeState(_stateController.JumpState);
+            }
+            if (isCrouching)
+            {
+                _stateController.ChangeState(_stateController.CrouchState);
             }
         }
     }

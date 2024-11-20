@@ -1,10 +1,4 @@
-﻿using UnityEngine;
-using Controllers;
-using Helpers.Managers;
-using Behaviours;
-using Helpers;
-
-namespace Behaviours.States
+﻿namespace Behaviours.States
 {
     class AimState : CharacterState
     {
@@ -14,7 +8,7 @@ namespace Behaviours.States
 
         protected override void InputHandle()
         {
-            throw new System.NotImplementedException();
+            base.InputHandle();
         }
     }
 }

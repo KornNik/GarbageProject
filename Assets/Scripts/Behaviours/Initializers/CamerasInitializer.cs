@@ -2,7 +2,6 @@
 using Data;
 using Controllers;
 using Helpers;
-using Helpers.Extensions;
 
 namespace Behaviours
 {
@@ -23,10 +22,10 @@ namespace Behaviours
         }
         private void MainCameraInitialization()
         {
-            var mainCameraResource = CustomResources.Load<Camera>
-                (Services.Instance.DatasBundle.ServicesObject.GetData<ResourcesPathData>().GetCamerPath());
+            var mainCameraResource = Services.Instance.DatasBundle.ServicesObject.
+                GetData<ResourcesPathData>().GetCamerPath();
             var mainCameraObject = Object.Instantiate(mainCameraResource,
-                _camerasData.GetMainCameraPosition(), Quaternion.identity);
+                _camerasData.GetMainCameraPosition(), Quaternion.identity).GetComponent<Camera>();
 
             Services.Instance.CameraService.SetObject(mainCameraObject);
         }

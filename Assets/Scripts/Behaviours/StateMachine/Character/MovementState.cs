@@ -47,6 +47,7 @@ namespace Behaviours.States
 
         protected override void InputHandle()
         {
+            base.InputHandle();
             var isMoving = _inputController.InputActions.PlayerActionList
                 [InputActionManagerPlayer.MOVEMENT].IsPressed();
             if(!isMoving)

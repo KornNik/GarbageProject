@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using Behaviours;
 using Helpers;
-using Helpers.AssetsPath;
-using Helpers.Extensions;
 using Data;
 
 namespace Controllers
@@ -19,14 +17,13 @@ namespace Controllers
 
         public void Awake()
         {
-            var recourcesBackgroundSource = CustomResources.Load<AudioSource>
-                (Services.Instance.DatasBundle.ServicesObject.GetData<ResourcesPathData>().
-                GetAudioPath(AudioTypes.BackgroundSourcePrefab));
-            _audioSourcePoolablePrefab = CustomResources.Load<AudioSource>
-                (Services.Instance.DatasBundle.ServicesObject.GetData<ResourcesPathData>().
-                GetAudioPath(AudioTypes.PoolableSourcePrefab));
+            var recourcesBackgroundSource = Services.Instance.DatasBundle.ServicesObject.
+                GetData<ResourcesPathData>().GetAudioPath(AudioTypes.BackgroundSourcePrefab);
+            _audioSourcePoolablePrefab = Services.Instance.DatasBundle.ServicesObject.
+                GetData<ResourcesPathData>().GetAudioPath(AudioTypes.PoolableSourcePrefab).
+                GetComponent<AudioSource>();
             _audioSourceBackground = GameObject.Instantiate(recourcesBackgroundSource,
-                Vector3.zero, Quaternion.identity, this.transform);
+                Vector3.zero, Quaternion.identity, this.transform).GetComponent<AudioSource>();
 
             _audioSourcePool = new AudioSourcePool(_audioSourcePoolablePrefab);
             _audioEventsHandler = new AudioEventsHandler();

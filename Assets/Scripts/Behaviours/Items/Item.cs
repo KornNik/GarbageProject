@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Behaviours.Items
 {
-    abstract class Item : MonoBehaviour, IItem, IMovable, IInteractable<Inventory>
+    abstract class Item : MonoBehaviour, IItem, IMovable, IInteractable<Equipment>
     {
         [SerializeField] private ItemData _data;
         [SerializeField] private Rigidbody _rigidbody;
@@ -38,14 +38,19 @@ namespace Behaviours.Items
 
         public void GrabItem()
         {
-        }
-
-        public void Interact(Inventory interactObject)
-        {
             _isAllowInteract = false;
             _rigidbody.isKinematic = true;
             _interactionCollider.enabled = false;
-            interactObject.AddItem(this);
+            Destroy(gameObject);
+        }
+
+        public void Interact(Equipment interactObject)
+        {
+            if (interactObject.AddItem(this))
+            {
+                Debug.Log($"Interacting{this}");
+                GrabItem();
+            }
         }
 
         public void Move(Vector3 movement)

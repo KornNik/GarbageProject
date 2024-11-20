@@ -2,9 +2,9 @@
 {
     sealed class EquipmentSlot : ItemSlot
     {
-        private void OnSelectButtonDown()
+        protected override void OnSelectButtonDown()
         {
-            InventorySlotEvent.Trigger(ItemData, SlotEventType.ItemMovedToInventory);
+            SlotEvent.Trigger(ItemData, SlotEventType.ItemMovedToInventory);
             ClearSlot();
         }
     }

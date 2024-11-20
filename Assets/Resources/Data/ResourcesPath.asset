@@ -18,21 +18,29 @@ MonoBehaviour:
   _audioFolder: Audio/
   _uiScreenFolder: UI/Screens/
   _uiPartFolder: UI/Parts/
-  _camerasFolder: Cameras/Prefabs_Cameras_MainCamera
-  _gameStatePath: GameStateBehaviour
-  _screensPath:
+  _cameraPrefab: {fileID: 1309152332432426233, guid: 7998a00cfb5553e4ab4116fa40208f5d,
+    type: 3}
+  _gameStatePrefab: {fileID: 7462832337231848308, guid: 5d6dea1a457761045ad76c64eb767455,
+    type: 3}
+  _screensPrefabs:
   - Type: 1
-    ResourcePath: Prefabs_UI_Canvas
+    Gameobject: {fileID: 8460954994891623692, guid: 20a01256c8dea064185f2c0fe2ca5e33,
+      type: 3}
   - Type: 2
-    ResourcePath: Prefabs_UI_MainMenu
+    Gameobject: {fileID: 7970510424411973072, guid: 491ad64f4e8cbbf45b359bf5fb6e0c6f,
+      type: 3}
   - Type: 3
-    ResourcePath: Prefabs_UI_PauseMenu
+    Gameobject: {fileID: 1490178274036686513, guid: 5c3c67f6a1d72c44681dcc5ce032aba8,
+      type: 3}
   - Type: 4
-    ResourcePath: Prefabs_UI_GameMenu
-  _audiosPath:
-  - Type: 1
-    ResourcePath: AudioSourcePrefab
-  - Type: 2
-    ResourcePath: AudioSourceBackground
-  - Type: 3
-    ResourcePath: AudioController
+    Gameobject: {fileID: 705034182132744932, guid: f9f4f3b8f84a68e478c95d6f6d7cdf40,
+      type: 3}
+  - Type: 6
+    Gameobject: {fileID: 7994970044604456457, guid: 3174efd4c02c6e148ace7bfaa2ea393e,
+      type: 3}
+  _audioPrefabs:
+    m_keys: 010000000200000003000000
+    m_values:
+    - {fileID: 4071350735295451852, guid: a07c80804ebc4b04ca22c4b2efc3d9da, type: 3}
+    - {fileID: 4934435838340974980, guid: eb0ac2a9f80d769419a44a67b2264a48, type: 3}
+    - {fileID: 4568101515950834475, guid: 882b96383c63526458fe8ea5e79f466d, type: 3}

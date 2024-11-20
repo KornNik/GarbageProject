@@ -19,12 +19,12 @@ namespace Controllers
             QualitySettings.vSyncCount = DEFAULT_VSYNC_COUNT;
             Application.targetFrameRate = DEFAULT_FRAME_RATE;
         }
-        private void LockedCursor()
+        public void LockedCursor()
         {
             Cursor.lockState = DEFAULT_CURSOR_LOCK_MODE;
             Cursor.visible = DEFAULT_CURSOR_STATE;
         }
-        private void UnLockedCursor()
+        public void UnLockedCursor()
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

@@ -7,7 +7,9 @@ namespace Behaviours
         None,
         ManuState,
         PauseState,
-        GameState
+        GameState,
+        ExitState,
+        InventoryState
     }
     struct ChangeGameStateEvent
     {

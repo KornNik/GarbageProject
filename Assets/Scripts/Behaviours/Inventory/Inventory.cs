@@ -5,22 +5,24 @@ namespace Behaviours
 {
     interface IInventory
     {
-        void AddItem(Item item);
-        void RemoveItem(Item selectedItem);
+        bool AddItem(Item item);
+        bool RemoveItem(Item selectedItem);
     }
     class Inventory : IInventory
     {
         private HashSet<Item> _items;
 
-        public void AddItem(Item item)
+        public bool AddItem(Item item)
         {
             _items.Add(item);
-            InventoryEvent.Trigger();
+            InventoryEvent.Trigger(InventoryEventType.InventoryChanged);
+            return true;
         }
-        public void RemoveItem(Item selectedItem)
+        public bool RemoveItem(Item selectedItem)
         {
             _items.Remove(selectedItem);
-            InventoryEvent.Trigger();
+            InventoryEvent.Trigger(InventoryEventType.InventoryChanged);
+            return true;
         }
     }
 }

@@ -11,6 +11,8 @@
         public const string RELOAD = "Reload";
         public const string HOLSTER = "Holster";
         public const string RUN = "Run";
-        public const string INSPECT = "Inspect";
+        public const string INTERACT = "Interact";
+        public const string INVENTORY = "Inventory";
+        public const string CROUCH = "Crouch";
     }
 }

@@ -33,7 +33,7 @@ namespace Behaviours.States
         }
         protected override void InputHandle()
         {
-
+            base.InputHandle();
         }
 
         private void MakeJump()

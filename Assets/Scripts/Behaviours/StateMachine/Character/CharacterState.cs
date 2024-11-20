@@ -12,6 +12,14 @@ namespace Behaviours.States
             _stateController = stateController;
             _inputController = Services.Instance.InputController.ServicesObject;
         }
+        public override void EnterState()
+        {
+            base.EnterState();
+        }
+        public override void ExitState()
+        {
+            base.ExitState();
+        }
         public override void LogicUpdate()
         {
             base.LogicUpdate();
@@ -22,8 +30,15 @@ namespace Behaviours.States
         {
             base.LogicLateUpdate();
         }
-        protected abstract void InputHandle();
-
+        protected virtual void InputHandle()
+        {
+            var isInteracting = _inputController.InputActions.
+                PlayerActionList[InputActionManagerPlayer.INTERACT].IsPressed();
+            if (isInteracting)
+            {
+                _stateController.StateObject.Interacter.CheckInteraction();
+            }
+        }
         private void MakeRotation()
         {
             _stateController.StateObject.Rotation.RotateTowardCamera();

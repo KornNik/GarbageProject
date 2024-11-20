@@ -16,8 +16,10 @@ namespace Behaviours
         [SerializeField] private TMP_Text _itemQuantity;
 
         private ItemData _itemData;
+        private bool _isEmpty;
 
         public ItemData ItemData => _itemData;
+        public bool IsEmpty => _isEmpty;
 
         private void OnEnable()
         {
@@ -37,6 +39,7 @@ namespace Behaviours
             _itemName.text = itemInfo.ItemData.Name;
             _itemQuantity.text = itemInfo.Quantity.ToString();
             _removeItemButton.gameObject.SetActive(true);
+            _isEmpty = false;
         }
         public void ClearSlot()
         {
@@ -45,16 +48,26 @@ namespace Behaviours
             _itemName.text = "Empty";
             _itemQuantity.text = "0";
             _removeItemButton.gameObject.SetActive(false);
+            _isEmpty = true;
+        }
+        public void ActivateSlot()
+        {
+            gameObject.SetActive(true);
+            ClearSlot();
+        }
+        public void DeactivateSlot()
+        {
+            gameObject.SetActive(false);
         }
 
         private void OnRemoveButtonDown()
         {
-            InventorySlotEvent.Trigger(_itemData,SlotEventType.ItemDroped);
+            SlotEvent.Trigger(_itemData,SlotEventType.ItemDroped);
             ClearSlot();
         }
-        private void OnSelectButtonDown()
+        protected virtual void OnSelectButtonDown()
         {
-            InventorySlotEvent.Trigger(_itemData, SlotEventType.ItemMovedToEquipment);
+            SlotEvent.Trigger(_itemData, SlotEventType.ItemMovedToEquipment);
             ClearSlot();
         }
     }

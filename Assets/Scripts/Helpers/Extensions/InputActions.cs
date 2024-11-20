@@ -15,6 +15,7 @@ namespace Assets.Scripts.Helpers.Extensions
         private InputAction _reload;
         private InputAction _holster;
         private InputAction _run;
+        private InputAction _inventory;
         private Dictionary<string, InputAction> _playerActionList = new Dictionary<string, InputAction>();
 
         public InputAction Fire => _fire;
@@ -26,8 +27,10 @@ namespace Assets.Scripts.Helpers.Extensions
         public InputAction Reload => _reload;
         public InputAction Holster => _holster;
         public InputAction Run => _run;
+        public InputAction Inventory => _inventory;
 
         public Dictionary<string, InputAction> PlayerActionList => _playerActionList;
+
 
         public InputActions(InputActionMap playerActionMap)
         {
@@ -41,20 +44,23 @@ namespace Assets.Scripts.Helpers.Extensions
             _playerActionList.Add(InputActionManagerPlayer.AIM, playerActionMap.FindAction(InputActionManagerPlayer.AIM));
             _playerActionList.Add(InputActionManagerPlayer.JUMP, playerActionMap.FindAction(InputActionManagerPlayer.JUMP));
             _playerActionList.Add(InputActionManagerPlayer.LOOK, playerActionMap.FindAction(InputActionManagerPlayer.LOOK));
-            _playerActionList.Add(InputActionManagerPlayer.INSPECT, playerActionMap.FindAction(InputActionManagerPlayer.INSPECT));
+            _playerActionList.Add(InputActionManagerPlayer.INTERACT, playerActionMap.FindAction(InputActionManagerPlayer.INTERACT));
             _playerActionList.Add(InputActionManagerPlayer.RELOAD, playerActionMap.FindAction(InputActionManagerPlayer.RELOAD));
             _playerActionList.Add(InputActionManagerPlayer.HOLSTER, playerActionMap.FindAction(InputActionManagerPlayer.HOLSTER));
             _playerActionList.Add(InputActionManagerPlayer.RUN, playerActionMap.FindAction(InputActionManagerPlayer.RUN));
+            _playerActionList.Add(InputActionManagerPlayer.INVENTORY, playerActionMap.FindAction(InputActionManagerPlayer.INVENTORY));
+            _playerActionList.Add(InputActionManagerPlayer.CROUCH, playerActionMap.FindAction(InputActionManagerPlayer.CROUCH));
 
             _fire = playerActionMap.FindAction(InputActionManagerPlayer.FIRE);
             _move = playerActionMap.FindAction(InputActionManagerPlayer.MOVEMENT);
             _aim = playerActionMap.FindAction(InputActionManagerPlayer.AIM);
             _jump = playerActionMap.FindAction(InputActionManagerPlayer.JUMP);
             _look = playerActionMap.FindAction(InputActionManagerPlayer.LOOK);
-            _inspect = playerActionMap.FindAction(InputActionManagerPlayer.INSPECT);
+            _inspect = playerActionMap.FindAction(InputActionManagerPlayer.INTERACT);
             _reload = playerActionMap.FindAction(InputActionManagerPlayer.RELOAD);
             _holster = playerActionMap.FindAction(InputActionManagerPlayer.HOLSTER);
             _run = playerActionMap.FindAction(InputActionManagerPlayer.RUN);
+            _inventory = playerActionMap.FindAction(InputActionManagerPlayer.INVENTORY);
         }
     }
 }

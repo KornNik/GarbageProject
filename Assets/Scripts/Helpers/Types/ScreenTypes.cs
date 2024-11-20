@@ -7,6 +7,7 @@
         MainMenu,
         PauseMenu,
         GameMenu,
-        LoadingScreen
+        LoadingScreen,
+        InventoryScreen
     }
 }
