@@ -1,5 +1,4 @@
-﻿using Behaviours.Items;
-using Helpers;
+﻿using Helpers;
 using UnityEngine;
 
 namespace Behaviours.Units
@@ -17,6 +16,7 @@ namespace Behaviours.Units
         }
 
         public float InteractionDistance { get => _interactionDistance; private set => InteractionDistance = value; }
+        public UnitModel UnitModel => _unitModel;
 
         public bool CheckInteraction()
         {
@@ -26,10 +26,10 @@ namespace Behaviours.Units
             {
                 for (int i = 0; i < hits; i++)
                 {
-                    var item = results[i].collider.gameObject.GetComponent<Item>();
-                    if (item != null)
+                    var interactable = results[i].collider.gameObject.GetComponent<IInteractable>();
+                    if (interactable != null)
                     {
-                        item.Interact(_unitModel.Equipment);
+                        MakeInteraction(interactable);
                         return true;
                     }
                 }
@@ -37,9 +37,9 @@ namespace Behaviours.Units
             return false;
         }
 
-        public void MakeInteraction(IInteractable<MonoBehaviour> interactable)
+        public void MakeInteraction(IInteractable interactable)
         {
-            interactable.Interact(_unitModel);
+            interactable.Interact(this);
         }
     }
 }

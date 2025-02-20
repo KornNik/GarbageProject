@@ -2,77 +2,66 @@
 using Helpers;
 using Data;
 using System.Collections.Generic;
+using Behaviours;
 
-namespace Behaviours
+namespace UI
 {
-    class InventoryUI : MonoBehaviour, IEventListener<SlotEvent>
+    class InventoryUI : MonoBehaviour, IEventListener<InventoryEvent>
     {
-        private const int INVENTORY_SLOTS_NUMBER = 20;
-
-        [SerializeField] private ItemSlot _slotPrefab;
         [SerializeField] private Transform _slotsSpawnTransform;
 
-        private BasePool<ItemSlot> _inventorySlots;
         private List<ItemSlot> _slots;
+        private InventoryData _inventoryData;
+        private BasePool<ItemSlot> _inventorySlots;
 
         private void Awake()
         {
-            _slots = new List<ItemSlot>(INVENTORY_SLOTS_NUMBER);
-            _inventorySlots = new BasePool<ItemSlot>(() => PreLoad(_slotPrefab), GetAction, ReturnAction, INVENTORY_SLOTS_NUMBER);
+            _inventoryData = Services.Instance.DatasBundle.ServicesObject.GetData<InventoryData>();
+            _slots = new List<ItemSlot>(_inventoryData.ItemsLimit);
+            _inventorySlots = new BasePool<ItemSlot>(() => PreLoad(_inventoryData.SlotPrefab), GetAction, ReturnAction, _inventoryData.ItemsLimit);
             GetAllSlots();
         }
         private void OnEnable()
         {
-            this.EventStartListening<SlotEvent>();
-            UpdateInventoryOnEnable();
+            this.EventStartListening<InventoryEvent>();
+            InventoryUIEvent.Trigger();
         }
         private void OnDisable()
         {
-            this.EventStopListening<SlotEvent>();
+            this.EventStopListening<InventoryEvent>();
         }
-
-        public ItemSlot PreLoad(ItemSlot prefab)
-        {
-            var slot = Instantiate(prefab);
-            slot.transform.parent = _slotsSpawnTransform;
-            return slot;
-        }
-        public void GetAction(ItemSlot itemSlot) => itemSlot.ActivateSlot();
-        public void ReturnAction(ItemSlot itemSlot) => itemSlot.DeactivateSlot();
 
         private void GetAllSlots()
         {
-            for (int i = 0; i < INVENTORY_SLOTS_NUMBER; i++)
+            for (int i = 0; i < _inventoryData.ItemsLimit; i++)
             {
                 var slot = _inventorySlots.Get();
                 _slots.Add(slot);
             }
         }
-        private void UpdateInventoryOnEnable()
+        private void UpdateInventory(List<ItemInfoDefault> itemsData)
         {
-
-        }
-        private void FillSlot(ItemData itemData)
-        {
-            var emptySlot = GetEmptySlot();
-            try
+            ClearAllSlots();
+            for (int i = 0;i < itemsData.Count; i++)
             {
-                emptySlot.FillSlot(new ItemInfo(itemData,1));
-            }
-            catch (System.Exception exception)
-            {
-                Debug.Log($" exception description{exception}, slot status{emptySlot}, item status{itemData}");
-                return;
+                _slots[i].FillSlot(itemsData[i]);
             }
         }
-        private void ClearSlot(ItemData itemData)
+        private void ClearSlot(ItemInfoDefault itemData)
         {
             for(int i = 0;i < _slots.Count; i++)
             {
-                if(_slots[i].ItemData == itemData)
+                if(_slots[i].ItemData.ItemData == itemData.ItemData)
                 {
                     _slots[i].ClearSlot();
                 }
+            }
+        }
+        private void ClearAllSlots()
+        {
+            for (int i = 0; i < _slots.Count; i++)
+            {
+                _slots[i].ClearSlot();
             }
         }
         private ItemSlot GetEmptySlot()
@@ -87,25 +76,31 @@ namespace Behaviours
             return null;
         }
 
-        public void OnEventTrigger(SlotEvent eventType)
+
+        #region PoolMethods
+
+        public ItemSlot PreLoad(ItemSlot prefab)
         {
-            if (eventType.SlotEventType == SlotEventType.ItemMovedToInventory)
-            {
-                FillSlot(eventType.ItemData);
-                InventoryEvent.Trigger(InventoryEventType.InventoryChanged);
-            }
+            var slot = Instantiate(prefab);
+            slot.transform.parent = _slotsSpawnTransform;
+            return slot;
+        }
+        public void GetAction(ItemSlot itemSlot) => itemSlot.ActivateSlot();
+        public void ReturnAction(ItemSlot itemSlot) => itemSlot.DeactivateSlot();
+
+        #endregion
+
+
+        #region EventTriggers
+
+        public void OnEventTrigger(InventoryEvent eventType)
+        {
+            UpdateInventory(eventType.Items);
         }
 
-        #region Test
-        [ContextMenu("AddRandomItem")]
-        public void TestAddItem()
-        {
-            for (int i = 0; i < _slots.Capacity; i++)
-            { 
-                FillSlot(Services.Instance.DatasBundle.ServicesObject.GetData<ItemsDataBundle>().GetRandomItem());
-            }
-        }
         #endregion
+
+
     }
 
 }

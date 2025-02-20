@@ -1,5 +1,6 @@
 ﻿using Data;
 using Helpers;
+using System.Collections.Generic;
 
 namespace Behaviours
 {
@@ -7,60 +8,29 @@ namespace Behaviours
     {
         None,
         InventoryChanged,
+        SendInventoryList
     }
     struct InventoryEvent
     {
         private InventoryEventType _inventoryEventType;
+        private List<ItemInfoDefault> _eventItems;
         private static InventoryEvent _inventoryEvent;
 
         public InventoryEventType InventoryEventType  => _inventoryEventType;
+        public List<ItemInfoDefault> Items => _eventItems;
 
-        public static void Trigger(InventoryEventType inventoryEventType)
+        public static void Trigger(List<ItemInfoDefault> eventItems)
         {
-            _inventoryEvent._inventoryEventType = inventoryEventType;
+            _inventoryEvent._eventItems = eventItems;
             EventManager.TriggerEvent(_inventoryEvent);
         }
     }
-    enum EquipmentEventType
+    struct InventoryUIEvent
     {
-        None,
-        EquipmentChanged
-    }
-    struct EquipmentEvent
-    {
-        private EquipmentEventType _eventType;
-        private static EquipmentEvent _equipmentEvent;
-
-        public EquipmentEventType EventType => _eventType;
-
-        public static void Trigger(EquipmentEventType eventType)
+        private static InventoryUIEvent _inventoryUIEvent;
+        public static void Trigger()
         {
-            _equipmentEvent._eventType = eventType;
-            EventManager.TriggerEvent(_equipmentEvent);
-        }
-    }
-    enum SlotEventType
-    {
-        None,
-        ItemDroped,
-        ItemMovedToInventory,
-        ItemMovedToEquipment
-    }
-    struct SlotEvent
-    {
-        private ItemData _itemData;
-        private SlotEventType _slotEventType;
-
-        private static SlotEvent _slotEvent;
-
-        public ItemData ItemData => _itemData;
-        public SlotEventType SlotEventType => _slotEventType;
-
-        public static void Trigger(ItemData ItemData, SlotEventType slotEventType)
-        {
-            _slotEvent._itemData = ItemData;
-            _slotEvent._slotEventType = slotEventType;
-            EventManager.TriggerEvent(_slotEvent);
+            EventManager.TriggerEvent(_inventoryUIEvent);
         }
     }
 }

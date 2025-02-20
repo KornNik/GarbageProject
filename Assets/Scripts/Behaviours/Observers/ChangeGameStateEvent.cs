@@ -9,7 +9,8 @@ namespace Behaviours
         PauseState,
         GameState,
         ExitState,
-        InventoryState
+        InventoryState,
+        LoadGameState,
     }
     struct ChangeGameStateEvent
     {

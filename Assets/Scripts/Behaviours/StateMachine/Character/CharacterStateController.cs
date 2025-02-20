@@ -8,6 +8,7 @@ namespace Behaviours.States
         private IState _jumpState;
         private IState _crouchState;
         private IState _movementState;
+        private IState _runState;
 
         private UnitModel _stateObject;
 
@@ -15,6 +16,7 @@ namespace Behaviours.States
         public IState JumpState => _jumpState;
         public IState CrouchState => _crouchState;
         public IState MovementState => _movementState;
+        public IState RunState => _runState;
 
         public UnitModel StateObject => _stateObject;
 
@@ -31,6 +33,7 @@ namespace Behaviours.States
             _jumpState = new JumpState(this);
             _movementState = new MovementState(this);
             _crouchState = new CrouchState(this);
+            _runState = new RunState(this);
         }
     }
 }

@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerUnit: {fileID: 2432757974362023458, guid: 1b65be8ffa359b942b1b6a4f487d2cd2,
     type: 3}
+  _otherUnit: {fileID: 4024087969374682135, guid: 2fd2b819a490be74998aead912c56eb4,
+    type: 3}

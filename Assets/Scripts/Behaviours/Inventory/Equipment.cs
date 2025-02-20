@@ -1,12 +1,17 @@
 ﻿using Behaviours.Items;
+using Data;
+using Helpers;
+using Helpers.Extensions;
 using System;
 using System.Collections.Generic;
 
 namespace Behaviours
 {
-    class Equipment : IInventory
+    class Equipment : IInventory, IEventListener<SlotEvent>, IEventListener<EquipmentUIEvent>, IDisposable
     {
         public event Action<bool> WeaponEquiped;
+        public event Action<bool> ArmorEquipped;
+
         private Weapon _weapon;
         private Dictionary<ArmorType, Item> _armors = new Dictionary<ArmorType, Item>(2);
 
@@ -15,6 +20,14 @@ namespace Behaviours
         public Equipment()
         {
             CreateArmorSlots();
+            this.EventStartListening<SlotEvent>();
+            this.EventStartListening<EquipmentUIEvent>();
+        }
+
+        public void Dispose()
+        {
+            this.EventStopListening<SlotEvent>();
+            this.EventStopListening<EquipmentUIEvent>();
         }
 
         private void CreateArmorSlots()
@@ -25,50 +38,92 @@ namespace Behaviours
 
         public bool IsWeaponEquiped()
         {
-            if(ReferenceEquals(null, _weapon))return false;
-            else return true;
+            if (ReferenceEquals(_weapon, null)) { return false; }
+            return true;
+        }
+        public bool IsArmorSlotEquiped(ArmorType armorToCheck)
+        {
+            if (ReferenceEquals(_armors[armorToCheck], null)) { return false; }
+            return true;
+        }
+        public bool TryAddItem(ItemInfoDefault itemInfo)
+        {
+            var armorType = ArmorTypeConverter.GetArmorType(itemInfo.ItemData.ItemUsingType);
+
+            if (itemInfo.ItemData.ItemUsingType == ItemUsingType.Weapon)
+            {
+                if (IsWeaponEquiped())
+                {
+                    //Send weapon to inventory
+                }
+                _weapon = itemInfo.GetItem() as Weapon;
+                WeaponEquiped?.Invoke(true);
+                EquipmentEvent.Trigger(EquipmentEventType.Change, itemInfo.ItemData.ItemUsingType, itemInfo);
+                return true;
+            }
+            else if (armorType != ArmorType.None)
+            {
+                if (IsArmorSlotEquiped(armorType))
+                {
+                    //Send armor to inventory
+                }
+                _armors[armorType] = itemInfo.GetItem();
+                ArmorEquipped?.Invoke(true);
+                EquipmentEvent.Trigger(EquipmentEventType.Change, itemInfo.ItemData.ItemUsingType, itemInfo);
+                return true;
+            }
+            return false;
         }
 
-        public bool AddItem(Item item)
+        public bool TryRemoveItem(ItemInfoDefault itemInfo)
         {
-            if (item is Weapon)
+            if (itemInfo.ItemData.ItemUsingType == ItemUsingType.Weapon)
             {
-                _weapon = item as Weapon;
-                WeaponEquiped?.Invoke(true);
-                return true;
+                if (!ReferenceEquals(_weapon, null))
+                {
+                    WeaponEquiped?.Invoke(false);
+                    EquipmentEvent.Trigger(EquipmentEventType.Remove, itemInfo.ItemData.ItemUsingType, itemInfo);
+                    return true;
+                }
+                return false;
             }
-            else if (item is Armor)
+            else if (itemInfo.ItemData.ItemUsingType == ItemUsingType.HeadArmor ||
+                itemInfo.ItemData.ItemUsingType == ItemUsingType.BodyArmor)
             {
-                var armor = item as Armor;
-                _armors[armor.ArmorType] = armor;
+                if (!ReferenceEquals(_weapon, null))
+                {
+
+                }
+                EquipmentEvent.Trigger(EquipmentEventType.Remove, itemInfo.ItemData.ItemUsingType, itemInfo);
                 return true;
             }
             return false;
         }
-        public bool RemoveItem(Item item)
+
+        public void AddItem(ItemInfoDefault item)
         {
-            if(item is Weapon)
+
+        }
+
+        public void RemoveItem(ItemInfoDefault item)
+        {
+
+        }
+
+        public void OnEventTrigger(SlotEvent eventType)
+        {
+            if (eventType.SlotEventType == SlotEventType.ItemMovedToEquipment)
             {
-                if(ReferenceEquals(_weapon, null))
+                if (!TryAddItem(eventType.ItemData))
                 {
-                    _weapon = null;
-                    WeaponEquiped?.Invoke(false);
-                    return true;
+                    SlotEvent.Trigger(eventType.ItemData, SlotEventType.ItemMovedToInventory);
                 }
-                return false;
             }
-            else if(item is Armor)
-            {
-                var armor = item as Armor;
-                if (_armors.ContainsKey(armor.ArmorType))
-                {
-                    _armors[armor.ArmorType] = null;
-                    return true;
-                }
-                return false;
-            }
-            return false;
+        }
+
+        public void OnEventTrigger(EquipmentUIEvent eventType)
+        {
+
         }
     }
-
 }

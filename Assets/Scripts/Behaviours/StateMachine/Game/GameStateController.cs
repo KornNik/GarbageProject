@@ -9,6 +9,7 @@ namespace Behaviours
         private IState _gameState;
         private IState _exitGameState;
         private IState _inverntoryState;
+        private IState _loadGameState;
 
         public GameStateController()
         {
@@ -29,6 +30,7 @@ namespace Behaviours
             _gameState = new GameState(this);
             _exitGameState = new ExitGameState(this);
             _inverntoryState = new InventoryState(this);
+            _loadGameState = new LoadGameState(this);
         }
 
         public void OnEventTrigger(ChangeGameStateEvent eventType)
@@ -51,6 +53,9 @@ namespace Behaviours
                     break;
                 case GameStateType.ExitState:
                     ChangeState(_exitGameState);
+                    break;
+                case GameStateType.LoadGameState:
+                        ChangeState(_loadGameState);
                     break;
             }
         }

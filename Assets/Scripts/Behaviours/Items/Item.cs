@@ -1,19 +1,19 @@
 ﻿using Data;
+using Helpers;
 using UnityEngine;
 
 namespace Behaviours.Items
 {
-    abstract class Item : MonoBehaviour, IItem, IMovable, IInteractable<Equipment>
+    abstract class Item : MonoBehaviour, IItem, IMovable, IInteractable
     {
-        [SerializeField] private ItemData _data;
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private Collider _interactionCollider;
-        [SerializeField, Range(0, 999)] private int _quantity = 1;
-        [SerializeField, Range(0, 100)] private int _condition = 100;
+        [SerializeField] private ItemInfoDefault _itemDataInfo;
 
         private bool _isAllowInteract = false;
 
-        public ItemData ItemData { get => _data; set => ItemData = value; }
+        public ItemData ItemData => ItemDataInfo.ItemData;
+        public ItemInfoDefault ItemDataInfo => _itemDataInfo;
 
         protected virtual void Awake()
         {
@@ -28,6 +28,11 @@ namespace Behaviours.Items
             
         }
 
+        public void SetItemDataInfo(ItemInfoDefault itemDataInfo)
+        {
+            _itemDataInfo.Quantity = itemDataInfo.Quantity;
+            _itemDataInfo.Condition = itemDataInfo.Condition;
+        }
         public void DropItem()
         {
             _isAllowInteract = true;
@@ -35,7 +40,6 @@ namespace Behaviours.Items
             _interactionCollider.enabled = true;
             Move(gameObject.transform.forward);
         }
-
         public void GrabItem()
         {
             _isAllowInteract = false;
@@ -43,21 +47,17 @@ namespace Behaviours.Items
             _interactionCollider.enabled = false;
             Destroy(gameObject);
         }
-
-        public void Interact(Equipment interactObject)
+        public void Interact(IInteracter interacter)
         {
-            if (interactObject.AddItem(this))
+            if (Services.Instance.PlayerGameObject.PlayerModel.Inventory.TryAddItem(_itemDataInfo))
             {
-                Debug.Log($"Interacting{this}");
                 GrabItem();
             }
         }
-
         public void Move(Vector3 movement)
         {
             _rigidbody.AddForce(transform.forward);
         }
-
         public void StopMovement()
         {
 

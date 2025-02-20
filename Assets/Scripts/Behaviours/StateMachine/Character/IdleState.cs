@@ -1,12 +1,14 @@
-﻿using Helpers;
+﻿using Behaviours.Units;
+using Helpers;
 
 namespace Behaviours.States
 {
     class IdleState : CharacterState
     {
+        private PlayerModel _playerModel;
         public IdleState(CharacterStateController characterStateController) : base(characterStateController)
         {
-
+            _playerModel = _stateController.StateObject as PlayerModel;
         }
         public override void EnterState()
         {
@@ -22,6 +24,7 @@ namespace Behaviours.States
         public override void LogicUpdate()
         {
             base.LogicUpdate();
+            _playerModel.CharacterController.Move(new UnityEngine.Vector3(0, _stateController.StateObject.Gravity.GetGravityValue(), 0));
         }
         public override void LogicLateUpdate()
         {

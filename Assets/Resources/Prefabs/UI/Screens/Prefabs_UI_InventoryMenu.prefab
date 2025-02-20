@@ -144,7 +144,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00003229561}
+  m_AnchoredPosition: {x: 0, y: 0.00040690153}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7992694498372480859
@@ -167,8 +167,8 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 0, y: 0}
+  m_CellSize: {x: 120, y: 120}
+  m_Spacing: {x: 20, y: 40}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &2796274156483911229
@@ -395,8 +395,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53fcf8649b053c34d83314c6b246700b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slotPrefab: {fileID: 1046833437970896809, guid: e0aed04985db4eb4cab1ab63279433b2,
-    type: 3}
   _slotsSpawnTransform: {fileID: 3200303371620111505}
 --- !u!1 &4346161089789615860
 GameObject:
@@ -631,12 +629,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb47171e2726e541816e6ac0e6608e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponSlot: {fileID: 846027128594244980}
+  _weaponSlot: {fileID: 279751512587349756}
   _equipmentArmor:
   - ArmorType: 1
-    Slot: {fileID: 1522741034269103928}
+    Slot: {fileID: 2125009988883897520}
   - ArmorType: 2
-    Slot: {fileID: 8167948525704729608}
+    Slot: {fileID: 8720710903523172224}
 --- !u!1 &8622679638071306570
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +756,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1540478349269788214}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99967587
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -891,7 +889,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -0.6649933
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8381197661503542625, guid: 3ba671f300c7a18429d9fdfd44805d78, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -902,16 +901,16 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 366374001327374697}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8167948525704729608 stripped
+--- !u!114 &8720710903523172224 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8381197661503542625, guid: 3ba671f300c7a18429d9fdfd44805d78,
+  m_CorrespondingSourceObject: {fileID: 8940682556224921321, guid: 3ba671f300c7a18429d9fdfd44805d78,
     type: 3}
   m_PrefabInstance: {fileID: 366374001327374697}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13019c77af4af9745bf3d9c4f634a36e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c4b57dd3609a154fb200970e6f09ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7020586498378793561
@@ -1042,21 +1041,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -0.6649933
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8381197661503542625, guid: 3ba671f300c7a18429d9fdfd44805d78, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ba671f300c7a18429d9fdfd44805d78, type: 3}
---- !u!114 &1522741034269103928 stripped
+--- !u!114 &2125009988883897520 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8381197661503542625, guid: 3ba671f300c7a18429d9fdfd44805d78,
+  m_CorrespondingSourceObject: {fileID: 8940682556224921321, guid: 3ba671f300c7a18429d9fdfd44805d78,
     type: 3}
   m_PrefabInstance: {fileID: 7020586498378793561}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13019c77af4af9745bf3d9c4f634a36e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c4b57dd3609a154fb200970e6f09ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &7190116170401541003 stripped
@@ -1178,21 +1178,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: EquipmentSlotWeapon
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8381197661503542625, guid: 3ba671f300c7a18429d9fdfd44805d78, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ba671f300c7a18429d9fdfd44805d78, type: 3}
---- !u!114 &846027128594244980 stripped
+--- !u!114 &279751512587349756 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8381197661503542625, guid: 3ba671f300c7a18429d9fdfd44805d78,
+  m_CorrespondingSourceObject: {fileID: 8940682556224921321, guid: 3ba671f300c7a18429d9fdfd44805d78,
     type: 3}
   m_PrefabInstance: {fileID: 9219519274970050581}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13019c77af4af9745bf3d9c4f634a36e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c4b57dd3609a154fb200970e6f09ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &9030844630792542663 stripped

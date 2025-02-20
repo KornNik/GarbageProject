@@ -4,7 +4,7 @@ namespace Behaviours.Items
 {
     interface IItem
     {
-        ItemData ItemData { get; set; }
+        ItemData ItemData { get; }
         void DropItem();
         void GrabItem();
     }

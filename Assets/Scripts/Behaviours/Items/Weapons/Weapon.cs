@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Attributes;
 using Behaviours.States;
+using Kinemation.SightsAligner;
 
 namespace Behaviours.Items
 {
@@ -8,12 +9,16 @@ namespace Behaviours.Items
     {
         [SerializeField] private WeaponAttributes _weaponAttrubutes;
         [SerializeField] private ModificationsPlaces[] _modificationsTransforms;
+        [SerializeField] private GunAimData _gunAimData;
+        [SerializeField] private Transform _aimPoint;
 
         private WeaponModificationsController _modificationsController;
         private WeaponStateController _stateController;
 
         public WeaponAttributes WeaponAttributes => _weaponAttrubutes;
         public WeaponModificationsController ModificationsController => _modificationsController;
+        public GunAimData GunAimData => _gunAimData;
+        public Transform AimPoint => _aimPoint;
 
         protected override void Awake()
         {
@@ -44,6 +49,15 @@ namespace Behaviours.Items
         }
 
         public virtual void Aim()
+        {
+
+        }
+
+        public void Equiped()
+        {
+        }
+
+        public void UnEquiped()
         {
 
         }

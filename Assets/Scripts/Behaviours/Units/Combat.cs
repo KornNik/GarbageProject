@@ -1,15 +1,23 @@
-﻿using System;
+﻿using Kinemation.SightsAligner;
+using System;
 
 namespace Behaviours.Units
 {
     sealed class Combat : IDisposable
     {
         private Equipment _equipment;
+        private CoreAnimComponent _animComponent;
 
-        public Combat(Equipment equipment)
+        public Combat(Equipment equipment, CoreAnimComponent animComponent)
         {
             _equipment = equipment;
+            _animComponent = animComponent;
             _equipment.WeaponEquiped += OnWeaponEquiped;
+
+            if (!_equipment.IsWeaponEquiped())
+            {
+                _animComponent.aiming = false;
+            }
         }
         public void Dispose()
         {
@@ -26,11 +34,21 @@ namespace Behaviours.Units
         public void Aim()
         {
             _equipment.Weapon.Aim();
+            _animComponent.aiming = !_animComponent.aiming;
         }
 
         private void OnWeaponEquiped(bool status)
         {
-
+            if (status)
+            {
+                _equipment.Weapon.Equiped();
+                _animComponent.Init(_equipment.Weapon.GunAimData, _equipment.Weapon.AimPoint);
+            }
+            else
+            {
+                _animComponent.aiming = false;
+                _equipment.Weapon.UnEquiped();
+            }
         }
     }
 }

@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aimLoc: {x: 0, y: 0, z: 0}
   aimRot: {x: 0, y: 0, z: 0, w: 0}
-  staticPose: {fileID: 0}
-  stateName: Aim
+  staticPose: {fileID: -203655887218126122, guid: 6fb60c84ca628d841bba27258ab079cb,
+    type: 3}
+  stateName: Idle

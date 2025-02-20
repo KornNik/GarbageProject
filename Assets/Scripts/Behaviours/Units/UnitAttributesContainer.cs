@@ -16,6 +16,7 @@ namespace Behaviours.Units
             _health = new UnitHealth(this, unitModel.UnitData.GetHealthAttributes());
             _armor = new UnitAttributeFloat(unitModel.UnitData.GetArmorAttributes());
             _speedMovement = new UnitAttributeFloat(unitModel.UnitData.GetMovementAttributes());
+            _jumpHeight = new UnitAttributeFloat(unitModel.UnitData.GetJumpAttributes());
 
         }
 

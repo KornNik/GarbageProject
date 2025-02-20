@@ -1,9 +1,19 @@
-﻿namespace Behaviours
+﻿using Cinemachine;
+using Controllers;
+using Helpers;
+
+namespace Behaviours
 {
-    sealed class ExitGameState : GameState
+    sealed class ExitGameState : BaseState<GameStateController>
     {
-        public ExitGameState(GameStateController stateController) : base(stateController)
+        private PlayerLoader _playerLoader;
+        private LevelLoader _levelLoader;
+        private CinemachineVirtualCamera _camera;
+        public ExitGameState(GameStateController stateController) : base()
         {
+            _playerLoader = Services.Instance.PlayerLoader.ServicesObject;
+            _levelLoader = Services.Instance.LevelLoader.ServicesObject;
+            _camera = Services.Instance.CameraService.ServicesObject.GetComponent<CinemachineVirtualCamera>();
         }
 
         public override void EnterState()
@@ -17,12 +27,11 @@
 
         }
 
-        public override void LogicFixedUpdate()
+        private void DeletLevel()
         {
-        }
-
-        public override void LogicUpdate()
-        {
+            _playerLoader.DeletePlayer();
+            _levelLoader.ClearLevelFull();
+            _camera.Follow = null;
         }
     }
 }

@@ -1,11 +1,9 @@
-﻿using UnityEngine;
-
-namespace Behaviours
+﻿namespace Behaviours
 {
     interface IInteracter
     {
         float InteractionDistance { get;}
-        void MakeInteraction(IInteractable<MonoBehaviour> interactable);
+        void MakeInteraction(IInteractable interactable);
         bool CheckInteraction();
     }
 }

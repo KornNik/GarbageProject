@@ -6,5 +6,7 @@
         void Recharge();
         void Reload();
         void Aim();
+        void Equiped();
+        void UnEquiped();
     }
 }

@@ -1,9 +1,7 @@
-﻿using UnityEngine;
-
-namespace Behaviours
+﻿namespace Behaviours
 {
-    interface IInteractable<T>
+    interface IInteractable
     {
-        void Interact(T interactObject);
+        void Interact(IInteracter interacter);
     }
 }

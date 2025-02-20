@@ -25,6 +25,7 @@ namespace Behaviours.States
             base.LogicUpdate();
             MakeRotation();
             InputHandle();
+            _stateController.StateObject.Movement.MoveUpdate();
         }
         public override void LogicLateUpdate()
         {

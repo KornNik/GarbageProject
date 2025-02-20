@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc4e6a542b168df4e87747244d3f3433, type: 3}
   m_Name: Weapon
   m_EditorClassIdentifier: 
-  _name: Pistol
-  _description: Revolver
-  _icon: {fileID: 21300000, guid: c4042597bc3809940b427bc6fb2f29ac, type: 3}
+  _name: Revolver
+  _description: Revolver with six rounds
+  _cost: 150
+  _icon: {fileID: 21300000, guid: 22e257a25081ae349a871b00d252aa7e, type: 3}
   _prefab: {fileID: 1986493253914447158, guid: 20da47a3e9bca614c83266e4fc309cb6, type: 3}
   _itemUsingType: 30
+  _quantityMaxStack: 1
+  _isQuantity: 0

@@ -23,7 +23,7 @@ namespace Behaviours.States
         {
             var movementInputs = _inputController.InputActions.PlayerActionList
                 [InputActionManagerPlayer.MOVEMENT].ReadValue<Vector2>();
-            _stateController.StateObject.Movement.Move(movementInputs);
+            _stateController.StateObject.Movement.MoveHorizontal(movementInputs);
 
             _stateController.StateObject.UnitEvents.HorizontalMoving?.Invoke(movementInputs.x);
             _stateController.StateObject.UnitEvents.VerticalMoving?.Invoke(movementInputs.y);

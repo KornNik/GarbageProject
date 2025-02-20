@@ -3,21 +3,16 @@ using Cinemachine;
 using Controllers;
 using Helpers;
 using UI;
-using UnityEngine;
 
 namespace Behaviours
 {
-    class GameState : BaseState<GameStateController>
+    sealed class GameState : BaseState<GameStateController>
     {
-        private PlayerLoader _playerLoader;
-        private LevelLoader _levelLoader;
-        private CinemachineVirtualCamera _camera;
         private InputController _inputController;
+        private CinemachineVirtualCamera _camera;
 
         public GameState(GameStateController stateController) : base()
         {
-            _playerLoader = Services.Instance.PlayerLoader.ServicesObject;
-            _levelLoader = Services.Instance.LevelLoader.ServicesObject;
             _inputController = Services.Instance.InputController.ServicesObject;
             _camera = Services.Instance.CameraService.ServicesObject.GetComponent<CinemachineVirtualCamera>();
         }
@@ -25,9 +20,8 @@ namespace Behaviours
         public override void EnterState()
         {
             ScreenInterface.GetInstance().Execute(ScreenTypes.GameMenu);
-            LoadPlayerBehaviours();
-            LoadLevelBehaviours();
             Services.Instance.SettingsController.ServicesObject.LockedCursor();
+            SetCamera();
         }
 
         public override void ExitState()
@@ -49,21 +43,11 @@ namespace Behaviours
                 ChangeGameStateEvent.Trigger(GameStateType.InventoryState);
             }
         }
-        private void LoadPlayerBehaviours()
+
+        private void SetCamera()
         {
-            _playerLoader.LoadPlayerClean();
             var cameraObject = (Services.Instance.PlayerGameObject.Controller.Model as PlayerModel).HeadTransform;
             _camera.Follow = cameraObject;
-        }
-        private void LoadLevelBehaviours()
-        {
-            _levelLoader.LoadLevelGame(0);
-        }
-        protected void DeletLevel()
-        {
-            _playerLoader.DeletePlayer();
-            _levelLoader.ClearLevelFull();
-            _camera.Follow = null;
         }
     }
 }

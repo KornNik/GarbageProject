@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace Behaviours.Items
 {
@@ -13,7 +11,7 @@ namespace Behaviours.Items
             _modifiers = new List<DamageModifier>();
         }
 
-        public void AddBulletModifier(DamageModifier newModifier)
+        public void AddModifier(DamageModifier newModifier)
         {
             _modifiers.Add(newModifier);
         }

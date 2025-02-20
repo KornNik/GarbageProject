@@ -1,8 +1,8 @@
-﻿using Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Helpers;
 using System;
+using Data;
 
 namespace Behaviours
 {
@@ -12,7 +12,7 @@ namespace Behaviours
         public ArmorType ArmorType;
         public EquipmentSlot Slot;
     }
-    class EquipmentUI : MonoBehaviour, IEventListener<SlotEvent>
+    class EquipmentUI : MonoBehaviour, IEventListener<EquipmentEvent>
     {
         [SerializeField] private EquipmentSlot _weaponSlot;
         [SerializeField] private EquipmentArmor[] _equipmentArmor;
@@ -22,15 +22,16 @@ namespace Behaviours
         private void Awake()
         {
             FillDictionary();
+            ActivateAllSlots();
         }
         private void OnEnable()
         {
-            this.EventStartListening<SlotEvent>();
-            UpdateEquipmentOnEnable();
+            this.EventStartListening<EquipmentEvent>();
+            EquipmentUIEvent.Trigger();
         }
         private void OnDisable()
         {
-            this.EventStopListening<SlotEvent>();
+            this.EventStopListening<EquipmentEvent>();
         }
 
         private void FillDictionary()
@@ -41,27 +42,7 @@ namespace Behaviours
                 _armors.Add(_equipmentArmor[i].ArmorType, _equipmentArmor[i].Slot);
             }
         }
-        private void FillEquipmentSlot(ItemData itemData)
-        {
-            if (itemData.ItemUsingType == ItemUsingType.HeadArmor)
-            {
-                _armors[ArmorType.Helmet].FillSlot(new ItemInfo(itemData, 0));
-            }
-            else if (itemData.ItemUsingType == ItemUsingType.BodyArmor)
-            {
-                _armors[ArmorType.Body].FillSlot(new ItemInfo(itemData, 0));
-            }
-            else if(itemData.ItemUsingType == ItemUsingType.Weapon)
-            {
-                Debug.Log("EquipWeapon");
-                _weaponSlot.FillSlot(new ItemInfo(itemData, 0));
-            }
-            else
-            {
-                SlotEvent.Trigger(itemData, SlotEventType.ItemMovedToInventory);
-            }
-        }
-        private void UpdateEquipmentOnEnable()
+        private void ActivateAllSlots()
         {
             _weaponSlot.ActivateSlot();
             for (int i = 0; i < _armors.Count; i++)
@@ -69,13 +50,46 @@ namespace Behaviours
                 _equipmentArmor[i].Slot.ActivateSlot();
             }
         }
-
-        public void OnEventTrigger(SlotEvent eventType)
+        private void UpdateEquipment(ItemInfoDefault itemInfo, ItemUsingType itemType)
         {
-            if (eventType.SlotEventType == SlotEventType.ItemMovedToEquipment)
+            if (itemType == ItemUsingType.Weapon)
             {
-                FillEquipmentSlot(eventType.ItemData);
-                EquipmentEvent.Trigger(EquipmentEventType.EquipmentChanged);
+                _weaponSlot.FillSlot(itemInfo);
+            }
+            else if (itemType == ItemUsingType.HeadArmor)
+            {
+                _armors[ArmorType.Helmet].FillSlot(itemInfo);
+            }
+            else if (itemType == ItemUsingType.BodyArmor)
+            {
+                _armors[ArmorType.Body].FillSlot(itemInfo);
+            }
+        }
+        private void ClearSlot(ItemUsingType itemType)
+        {
+            if(itemType == ItemUsingType.Weapon)
+            {
+                _weaponSlot.ClearSlot();
+            }
+            else if(itemType == ItemUsingType.HeadArmor)
+            {
+                _armors[ArmorType.Helmet].ClearSlot();
+            }
+            else if (itemType == ItemUsingType.BodyArmor)
+            {
+                _armors[ArmorType.Body].ClearSlot();
+            }
+        }
+
+        public void OnEventTrigger(EquipmentEvent eventType)
+        {
+            if(eventType.EventType== EquipmentEventType.Remove)
+            {
+                ClearSlot(eventType.ItemType);
+            }
+            else if(eventType.EventType == EquipmentEventType.Change)
+            {
+                UpdateEquipment(eventType.ChangedItem, eventType.ItemType);
             }
         }
     }

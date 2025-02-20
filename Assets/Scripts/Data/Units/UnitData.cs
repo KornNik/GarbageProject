@@ -32,5 +32,10 @@ namespace Data
             var newAttributes = new AttributeDataFloat(_movementSpeed, 0, _movementSpeed);
             return newAttributes;
         }
+        public AttributeDataFloat GetJumpAttributes()
+        {
+            var newAttributes = new AttributeDataFloat(_jumpHeight, 0, _jumpHeight);
+            return newAttributes;
+        }
     }
 }

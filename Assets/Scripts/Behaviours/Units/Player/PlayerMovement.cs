@@ -1,4 +1,5 @@
 ﻿using Behaviours.Units;
+using MFPC;
 using UnityEngine;
 
 namespace Behaviours
@@ -7,27 +8,86 @@ namespace Behaviours
     {
         private CharacterController _characterController;
         private UnitAttributesContainer _unitAttributes;
+        private Gravity _gravity;
 
-        public PlayerMovement(CharacterController characterController, UnitAttributesContainer unitAttributes)
+        private Transform _player;
+        private Vector3 _moveDirection;
+        private PlayerData _playerData;
+        private bool _isGrounded;
+        private float _verticalDirection;
+
+        private Vector3 _lastDirection;
+        private float _lastSpeed;
+        private float _lastPlayerPositionY;
+
+        public PlayerMovement(CharacterController characterController, UnitAttributesContainer unitAttributes,Gravity gravity, PlayerData playerData)
         {
             _unitAttributes = unitAttributes;
             _characterController = characterController;
+            _gravity = gravity;
+            _playerData = playerData;
+            _player = _characterController.transform;
+        }
+        public override void MoveHorizontal(Vector3 direction, float speed = 1f)
+        {
+            if (_characterController.isGrounded || IsLockGravity)
+            {
+                direction.Normalize();
+                _lastDirection = direction;
+                _lastSpeed = speed;
+
+                //Direction of movement
+                _moveDirection = _player.transform.TransformDirection(new Vector3(direction.x, 0.0f, direction.z)) *
+                                 speed;
+            }
         }
 
-        public override void Move(Vector3 movement)
+        public override void MoveVertical(Vector3 direction, float speed = 1f)
         {
-            var normalizedMovement = Vector3.Normalize(movement);
-            var movementVector = new Vector3(normalizedMovement.x, 0, normalizedMovement.y);
-            var localMovement = _characterController.transform.right * normalizedMovement.x +
-                _characterController.transform.forward * normalizedMovement.y;
-            var finalMovement = localMovement * _unitAttributes.SpeedMovement.Attribute.CurrentValue *
-                Time.fixedDeltaTime;
-            _characterController.Move(finalMovement);
+            direction.Normalize();
+
+            _verticalDirection = direction.y * speed;
         }
 
-        public override void StopMovement()
+        public override void MoveUpdate()
         {
-            _characterController.Move(Vector3.zero);
+            Gravity();
+            _characterController.Move(GetPlayerDirection());
+        }
+
+        private void Gravity()
+        {
+            if (IsLockGravity) return;
+
+            if (_characterController.isGrounded)
+            {
+                if (!_isGrounded) _verticalDirection = -0.01f;
+
+                _isGrounded = true;
+            }
+            else
+            {
+                _verticalDirection -= _playerData.Gravity * Time.deltaTime;
+
+                _isGrounded = false;
+            }
+        }
+
+        private Vector3 GetPlayerDirection()
+        {
+            Vector3 inAirDirection;
+
+            if (!_characterController.isGrounded && _playerData.AirControl && !IsLockGravity)
+            {
+                inAirDirection = _player.transform.TransformDirection(_lastDirection) * _lastSpeed;
+                return new Vector3(inAirDirection.x, _verticalDirection, inAirDirection.z) *
+                       Time.deltaTime;
+            }
+            else
+            {
+                return new Vector3(_moveDirection.x, _verticalDirection, _moveDirection.z) *
+                       Time.deltaTime;
+            }
         }
     }
 }

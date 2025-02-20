@@ -26,7 +26,6 @@ namespace Behaviours
             var rotationInEulers = rotation.eulerAngles;
             var finalObjectRotation = new Vector3(0f, rotationInEulers.y, 0f);
             _characterTransform.DOLocalRotate(finalObjectRotation, 0.2f);
-            //_characterTransform.DOLookAt(_camera.transform.forward, 0.2f);
         }
     }
 }
